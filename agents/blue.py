@@ -63,7 +63,7 @@ class BlueAdapter(SimpleAdapter[str]):
 
         for f in findings:
             if tid := tasks.get(f["vuln"]):
-                await safe(tools.update_task(tid, status="in_review",
+                await safe(tools.update_task(tid, status="completed",
                                              comment="Patch deployed: " + FIX_NOTES.get(f["vuln"], "")))
 
         await safe(tools.store_memory(
