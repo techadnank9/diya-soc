@@ -2,6 +2,7 @@
 # Render entrypoint: the range on $PORT, plus the agents when BAND keys are set.
 set -uo pipefail
 cd "$(dirname "$0")"
+export TARGET_ADMIN_TOKEN="${TARGET_ADMIN_TOKEN:-$(python -c 'import secrets;print(secrets.token_urlsafe(18))')}"
 export TARGET_URL="http://127.0.0.1:${PORT:-5055}"
 python target/app.py &
 sleep 3
