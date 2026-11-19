@@ -13,6 +13,7 @@ from band.runtime.shutdown import run_with_graceful_shutdown
 from agents.common import apply_patch, ensure_lyzr_agents, extract_payload, lyzr_think
 
 configure_logging()
+PACE = float(os.getenv("DEMO_PACE", "0"))  # seconds between steps, for live demos
 RED_ID = os.getenv("RED_BAND_AGENT_ID", "")
 
 FIX_NOTES = {
@@ -53,6 +54,7 @@ class BlueAdapter(SimpleAdapter[str]):
         await tools.send_event(f"Triaging {len(findings)} finding(s) from Red round {rnd}", "thought")
         plan = await lyzr_think("blue", "Findings:\n" + json.dumps(findings, indent=1), room_id[:12])
 
+        await asyncio.sleep(PACE)
         vulns = [f["vuln"] for f in findings]
         await tools.send_event(json.dumps({"enable": vulns}), "tool_call",
                                metadata={"tool": "deploy_patch"})
@@ -69,6 +71,7 @@ class BlueAdapter(SimpleAdapter[str]):
             system="long_term", type="procedural", segment="agent",
             thought="Reusable fix playbook for these vulnerability classes.", scope="agent"))
 
+        await asyncio.sleep(PACE)
         notes = "\n".join(f"- {f['title']}: {FIX_NOTES.get(f['vuln'], '')}" for f in findings)
         body = plan or notes
         text = (f"Patched {len(vulns)} issue(s) and deployed to the range.\n\n{body}\n\n"

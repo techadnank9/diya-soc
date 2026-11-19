@@ -13,6 +13,7 @@ from band.runtime.shutdown import run_with_graceful_shutdown
 from agents.common import attack_all, ensure_lyzr_agents, extract_payload, lyzr_think
 
 configure_logging()
+PACE = float(os.getenv("DEMO_PACE", "0"))  # seconds between steps, for live demos
 BLUE_ID = os.getenv("BLUE_BAND_AGENT_ID", "")
 MAX_ROUNDS = 3
 
@@ -67,6 +68,7 @@ class RedAdapter(SimpleAdapter[str]):
                 goal_title="Diwali Red vs Blue: harden Diya Sweets",
                 goal_summary="Red attacks, Blue patches, Red re-attacks until every finding is closed."))
 
+        await asyncio.sleep(PACE)
         results = await asyncio.to_thread(attack_all)
         for r in results:
             await tools.send_event(
@@ -108,6 +110,7 @@ class RedAdapter(SimpleAdapter[str]):
                 mentions=[state["human"]] if state["human"] else None)
             return
 
+        await asyncio.sleep(PACE)
         evidence = [{k: r[k] for k in ("vuln", "title", "cwe", "payload", "evidence")} for r in open_]
         report = await lyzr_think("red", "Evidence:\n" + json.dumps(evidence, indent=1), room_id[:12])
         if not report:
