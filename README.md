@@ -2,7 +2,7 @@
 
 Built for the Diwali Agent-to-Agent Hackathon (Security track: Attack & Defend).
 
-Demo video: [video/diya-soc-demo.mp4](video/diya-soc-demo.mp4) (84 s, real screenshots of a live run).
+Demo video: [video/diya-soc-demo.mp4](video/diya-soc-demo.mp4) (81 s, narrated with subtitles; real screenshots of a live run on BAND + Lyzr; subtitles also in video/diya-soc-demo.srt).
 
 Two autonomous agents share a **BAND room** with the humans who own the app:
 

@@ -5,3 +5,4 @@ __pycache__/
 target/patches.json
 target/events.jsonl
 video/seg/
+video/seg_v/
