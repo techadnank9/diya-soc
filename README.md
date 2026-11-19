@@ -2,6 +2,8 @@
 
 Built for the Diwali Agent-to-Agent Hackathon (Security track: Attack & Defend).
 
+Demo video: [video/diya-soc-demo.mp4](video/diya-soc-demo.mp4) (84 s, real screenshots of a live run).
+
 Two autonomous agents share a **BAND room** with the humans who own the app:
 
 - **Red Agent** fires real exploits (SQL injection, reflected XSS, IDOR, secret leak) at a deliberately vulnerable shop. It opens one **BAND task** per confirmed finding, posts a severity report written by its **Lyzr** brain, and **@mentions Blue** with a machine-readable handoff.

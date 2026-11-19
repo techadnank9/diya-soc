@@ -4,3 +4,4 @@ __pycache__/
 .lyzr_agents.json
 target/patches.json
 target/events.jsonl
+video/seg/
