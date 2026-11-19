@@ -10,6 +10,7 @@ from __future__ import annotations
 import html
 import json
 import sqlite3
+import os
 import time
 from pathlib import Path
 
@@ -18,7 +19,7 @@ from flask import Flask, jsonify, request
 ROOT = Path(__file__).parent
 PATCHES = ROOT / "patches.json"
 EVENTS = ROOT / "events.jsonl"
-ADMIN_TOKEN = "blue-team-local"  # local range only
+ADMIN_TOKEN = os.getenv("TARGET_ADMIN_TOKEN", "blue-team-local")
 
 VULNS = {
     "sqli_login": "SQL injection in /login",
@@ -56,7 +57,7 @@ def db() -> sqlite3.Connection:
 
 @app.get("/")
 def home():
-    return "<h1>Diya Sweets</h1><p>Festival of Lights shop. Try /search?q=laddoo</p>"
+    return '<h1>Diya Sweets</h1><p>Festival of Lights shop (a deliberately vulnerable test range). <a href="/soc">Open the live Red vs Blue SOC</a></p>'
 
 
 @app.post("/login")
@@ -152,4 +153,4 @@ def soc():
 
 
 if __name__ == "__main__":
-    app.run(port=5055, debug=False)
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5055")), debug=False, threaded=True)
